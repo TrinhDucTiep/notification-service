@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create-notification-table" author="tieptd">
+        <sql>
+            CREATE TABLE if not exists notification (
+                id int not null primary key AUTO_INCREMENT,
+                user_id int not null,
+                template_id int not null,
+                status ENUM("PENDING", "SUCCESS", "FAIL") not null,
+                is_read TINYINT(1) not null,
+                data JSON not null,
+                service_source varchar(255),
+                create_at DATETIME not null,
+                end_at DATETIME
+            );
+        </sql>
+
+        <rollback>
+            <sql>
+                DROP TABLE notification;
+            </sql>
+        </rollback>
+
+    </changeSet>
+
+    <changeSet id="add-notification-user-fk" author="tieptd">
+        <sql>
+            ALTER TABLE `notification`
+                ADD CONSTRAINT `notification_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE `notification` DROP FOREIGN KEY `notification_user_fk`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add-notification-template-fk" author="tieptd">
+        <sql>
+            ALTER TABLE `notification`
+                ADD CONSTRAINT `notification_template_fk` FOREIGN KEY (`template_id`) REFERENCES `template` (`id`);
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE `notification` DROP FOREIGN KEY `notification_template_fk`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create-table-template" author="tieptd">
+        <sql>
+            CREATE TABLE if not exists template (
+                id int not null primary key AUTO_INCREMENT,
+                channel ENUM("OTT", "EMAIL", "SMS") not null,
+                form TEXT not null,
+                sender_id int not null
+            );
+        </sql>
+
+        <rollback>
+            <sql>
+                DROP TABLE template;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add-template-sender-fk" author="tieptd">
+        <sql>
+            ALTER TABLE `template`
+                ADD CONSTRAINT `template_sender_fk` FOREIGN KEY (`sender_id`) REFERENCES `sender` (`id`);
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE `template` DROP FOREIGN KEY `template_sender_fk`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

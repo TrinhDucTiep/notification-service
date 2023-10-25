@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="create-table-device" author="tieptd">
+        <sql>
+            CREATE TABLE if not exists device (
+                id varchar(255) not null primary key,
+                user_id int not null
+            );
+        </sql>
+
+        <rollback>
+            <sql>
+                DROP TABLE device;
+            </sql>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="add-device-user-fk" author="tieptd">
+        <sql>
+            ALTER  TABLE  device
+                ADD CONSTRAINT `device_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+        </sql>
+
+        <rollback>
+            <sql>
+                ALTER TABLE `device` DROP FOREIGN KEY `device_user_fk`;
+            </sql>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

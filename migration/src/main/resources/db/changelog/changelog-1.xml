@@ -1,0 +1,51 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    
+    <changeSet id="1698045328177_00" author="tieptd">
+        <tagDatabase tag="1"/>
+    </changeSet>
+    <changeSet id="1698045328177_01" author="tieptd">
+        <sql>
+            ALTER TABLE template ADD COLUMN `title` JSON not null;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1698045328177_02" author="tieptd">
+        <sql>
+            ALTER TABLE history
+                MODIFY response JSON NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1698045328177_03" author="tieptd">
+        <sql>
+            ALTER TABLE history
+                MODIFY update_at JSON NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1698045328177_04" author="tieptd">
+        <sql>
+            ALTER TABLE history
+                MODIFY COLUMN response JSON NULL COLLATE utf8mb4_general_ci;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1698045328177_05" author="tieptd">
+        <sql>
+            ALTER TABLE history
+                MODIFY COLUMN update_at DATETIME NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1698045328177_06" author="tieptd">
+        <sql>
+            ALTER TABLE notification
+                MODIFY COLUMN data JSON COLLATE utf8mb4_general_ci not NULL;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
