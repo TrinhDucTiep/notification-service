@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 public class SendNotificationRequest {
     @JsonProperty("template_id")
-    private Integer templateId;
+    private String templateId;
     @JsonProperty("service_source")
     private String serviceSource;
     @JsonProperty("to")

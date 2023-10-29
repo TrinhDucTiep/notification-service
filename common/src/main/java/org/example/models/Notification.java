@@ -39,6 +39,12 @@ public class Notification {
     @Column(name = "end_at", columnDefinition = "DATETIME")
     private LocalDateTime endAt;
 
+    @Column(name = "rendered_title")
+    private String renderedTitle;
+
+    @Column(name = "rendered_content")
+    private String renderedContent;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public interface NotificationAdmin {
     Integer getId();
     Integer getUserId();
-    Integer getTemplateId();
+    String getTemplateId();
     Integer getSenderId();
     Status getStatus();
     Channel getChannel();
@@ -19,4 +19,6 @@ public interface NotificationAdmin {
     String getServiceSource();
     LocalDateTime getCreateAt();
     LocalDateTime getEndAt();
+    String getRenderedTitle();
+    String getRenderedContent();
 }

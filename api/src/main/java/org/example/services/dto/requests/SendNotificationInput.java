@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Builder
 public class SendNotificationInput {
-    private Integer templateId;
+    private String templateId;
     private String serviceSource;
     private List<ToItem> to;
 }

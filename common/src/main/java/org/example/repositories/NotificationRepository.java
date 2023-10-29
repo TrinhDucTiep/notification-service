@@ -49,6 +49,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
             n.status as status,
             n.is_read as isRead,
             n.data as data,
+            n.rendered_title as renderedTitle,
+            n.rendered_content as renderedContent,
             n.service_source as serviceSource,
             n.create_at as createAt,
             n.end_at as endAt,

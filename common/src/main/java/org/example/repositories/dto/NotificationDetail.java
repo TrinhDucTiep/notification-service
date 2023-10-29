@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public interface NotificationDetail {
     Integer getNotificationId();
     Integer getUserId();
-    Integer getTemplateId();
+    String getTemplateId();
     Integer getSenderId();
 
     Status getStatus();

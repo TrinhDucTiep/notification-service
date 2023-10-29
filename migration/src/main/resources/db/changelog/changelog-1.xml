@@ -48,4 +48,21 @@
         </sql>
     </changeSet>
 
+    <changeSet id="1698045328177_07" author="tieptd">
+        <sql>
+            ALTER TABLE notification
+                DROP FOREIGN KEY `notification_template_fk`,
+                DROP column template_id;
+
+            ALTER TABLE template
+                MODIFY COLUMN id Varchar(255) COLLATE utf8mb4_general_ci not null;
+
+            ALTER TABLE notification
+                add column rendered_title TEXT,
+                add column rendered_content TEXT,
+                add column template_id varchar(255),
+                ADD CONSTRAINT `notification_template_fk` FOREIGN KEY (`template_id`) REFERENCES `template` (`id`);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
