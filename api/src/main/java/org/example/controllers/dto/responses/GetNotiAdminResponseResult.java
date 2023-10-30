@@ -3,8 +3,8 @@ package org.example.controllers.dto.responses;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.example.controllers.dto.DataItem;
-import org.example.models.Channel;
-import org.example.models.Provider;
+import org.example.enumerate.Channel;
+import org.example.enumerate.Provider;
 
 import java.time.LocalDateTime;
 import java.util.List;

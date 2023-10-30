@@ -1,4 +1,4 @@
-package org.example.services.dto.requests;
+package org.example.services.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

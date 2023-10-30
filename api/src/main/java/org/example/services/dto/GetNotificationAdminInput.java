@@ -1,11 +1,11 @@
-package org.example.services.dto.requests;
+package org.example.services.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
-import org.example.models.Channel;
-import org.example.models.Provider;
-import org.example.models.Status;
+import org.example.enumerate.Channel;
+import org.example.enumerate.Provider;
+import org.example.enumerate.Status;
 
 import java.time.LocalDateTime;
 

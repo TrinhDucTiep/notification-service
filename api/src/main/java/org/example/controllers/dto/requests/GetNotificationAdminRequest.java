@@ -1,15 +1,15 @@
 package org.example.controllers.dto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
-import org.example.models.Channel;
-import org.example.models.Provider;
-import org.example.models.Status;
-import org.example.services.dto.requests.GetNotificationAdminInput;
+import org.example.enumerate.Channel;
+import org.example.enumerate.EnumValidator;
+import org.example.enumerate.Provider;
+import org.example.enumerate.Status;
+import org.example.services.dto.GetNotificationAdminInput;
 import org.springdoc.api.annotations.ParameterObject;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,21 +17,27 @@ import java.time.LocalDateTime;
 public class GetNotificationAdminRequest {
     @JsonProperty("user_id")
     private Integer userId;
+    @EnumValidator(enumClass = Channel.class)
     @JsonProperty("channel")
     private Channel channel;
+    @Email
     @JsonProperty("email")
     private String email;
     @JsonProperty("phone_number")
     private String phoneNumber;
     @JsonProperty("notification_id")
     private Integer notificationId;
+    @EnumValidator(enumClass = Provider.class)
     @JsonProperty("provider")
     private Provider provider;
     @JsonProperty("sender_id")
     private Integer senderId;
+    @EnumValidator(enumClass = Status.class)
     @JsonProperty("status")
     private Status status;
+    @JsonProperty("create_at")
     private LocalDateTime createAt;
+    @JsonProperty("end_at")
     private LocalDateTime endAt;
 
     @JsonProperty("page")

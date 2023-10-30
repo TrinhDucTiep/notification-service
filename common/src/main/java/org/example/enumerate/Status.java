@@ -1,4 +1,4 @@
-package org.example.models;
+package org.example.enumerate;
 
 public enum Status {
     PENDING,

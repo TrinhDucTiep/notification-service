@@ -1,16 +1,25 @@
 package org.example.utils;
 
+import lombok.RequiredArgsConstructor;
 import org.example.controllers.dto.DataItem;
+import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.List;
 
+@Configuration
+@RequiredArgsConstructor
 public class TemplateConverter {
+    private final TemplateEngine templateEngine;
 
-    public static String convertTemplate(String form, List<DataItem> data) {
+    public String convertTemplate(String form, List<DataItem> data) {
+        Context context = new Context();
         for(DataItem dataItem: data) {
-            form = form.replace("{" + dataItem.getKey() + "}", dataItem.getValue());
+            context.setVariable(dataItem.getKey(), dataItem.getValue());
         }
-        return form;
+
+        return templateEngine.process(form, context);
     }
 
 }

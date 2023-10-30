@@ -1,6 +1,5 @@
-package org.example.services.dto.requests;
+package org.example.services.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import org.example.controllers.dto.requests.ToItem;

@@ -6,29 +6,19 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.controllers.dto.requests.ToItem;
 import org.example.controllers.dto.responses.SendResponseResult;
-import org.example.models.*;
+import org.example.models.Device;
+import org.example.models.Notification;
+import org.example.enumerate.Status;
 import org.example.repositories.DeviceRepository;
-import org.example.repositories.HistoryRepository;
-import org.example.repositories.NotificationRepository;
-import org.example.repositories.UserRepository;
-import org.example.services.dto.requests.SendNotificationInput;
-import org.example.utils.TemplateConverter;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-//@RequiredArgsConstructor
 @Slf4j
 @AllArgsConstructor
 @Component("FIREBASE")
@@ -37,26 +27,22 @@ public class FirebaseAdapter implements ProviderAdapter {
     private final DeviceRepository deviceRepository;
 
     @Override
-    public ProviderResponse sendNotiMultiUsers(ToItem toItem, Template template) {
+    public ProviderResponse sendNotiMultiDevices(String config, Notification notification) {
 
         // get firebaseMessaging instance
-        FirebaseMessaging myFirebaseMessaging = getFirebaseMessagingInstance(template.getSender().getConfig());
+        FirebaseMessaging myFirebaseMessaging = getFirebaseMessagingInstance(config);
 
         // send message for each of user
         boolean isSuccess = false;
 
-        // convert form + data => for user
-        String title = TemplateConverter.convertTemplate(template.getTitle(), toItem.getData());
-        String body = TemplateConverter.convertTemplate(template.getForm(), toItem.getData());
-
         // send for each device of user
         JsonObject responseJson = new JsonObject();
-        for (Device device : deviceRepository.findAllByUserId(toItem.getUserId())) {
+        for (Device device : deviceRepository.findAllByUserId(notification.getUser().getId())) {
             Message message = Message.builder()
                     .setNotification(
                             com.google.firebase.messaging.Notification.builder()
-                                    .setTitle(title)
-                                    .setBody(body)
+                                    .setTitle(notification.getRenderedTitle())
+                                    .setBody(notification.getRenderedContent())
                                     .build()
                     )
                     .setToken(device.getId())
@@ -75,7 +61,7 @@ public class FirebaseAdapter implements ProviderAdapter {
         }
 
         // add to the result
-        return new ProviderResponse(new SendResponseResult(toItem.getUserId(), isSuccess? Status.SUCCESS : Status.FAIL), responseJson.toString());
+        return new ProviderResponse(new SendResponseResult(notification.getUser().getId(), isSuccess? Status.SUCCESS : Status.FAIL), responseJson.toString());
     }
 
 

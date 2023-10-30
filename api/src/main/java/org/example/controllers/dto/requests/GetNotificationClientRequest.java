@@ -2,7 +2,7 @@ package org.example.controllers.dto.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.example.services.dto.requests.GetNotificationClientInput;
+import org.example.services.dto.GetNotificationClientInput;
 import org.springdoc.api.annotations.ParameterObject;
 
 import java.time.LocalDateTime;

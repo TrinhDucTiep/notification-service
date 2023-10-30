@@ -2,6 +2,7 @@ package org.example.models;
 
 import javax.persistence.*;
 import lombok.*;
+import org.example.enumerate.Channel;
 
 import java.util.List;
 

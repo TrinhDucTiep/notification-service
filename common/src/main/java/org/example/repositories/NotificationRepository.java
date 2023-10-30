@@ -1,9 +1,9 @@
 package org.example.repositories;
 
-import org.example.models.Channel;
+import org.example.enumerate.Channel;
 import org.example.models.Notification;
-import org.example.models.Provider;
-import org.example.models.Status;
+import org.example.enumerate.Provider;
+import org.example.enumerate.Status;
 import org.example.repositories.dto.NotificationAdmin;
 import org.example.repositories.dto.NotificationClient;
 import org.example.repositories.dto.NotificationDetail;
@@ -126,8 +126,8 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 
     @Query(value = """
         select 
-            template_id as templateId,
-            data as data,
+            rendered_title as renderedTitle,
+            rendered_content as renderedContent,
             is_read as isRead,
             end_at as endAt
         from notification

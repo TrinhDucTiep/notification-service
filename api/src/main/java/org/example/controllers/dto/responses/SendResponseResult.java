@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.models.Status;
-
-import java.util.List;
+import org.example.enumerate.Status;
 
 @Data
 @AllArgsConstructor
