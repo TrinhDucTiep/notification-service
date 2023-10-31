@@ -1,3 +1,21 @@
+firebase:
+  googleCredentials: C:\Users\Admin\IdeaProjects\notification-service\api\src\main\resources\my-notification-2ac09-firebase-adminsdk-1bj48-da490ab00d.json
+server:
+  port: 8082
+
 spring:
-  profiles:
-    active: local
+  datasource:
+#    url: jdbc:mysql://localhost:3306/w1_project
+    url: jdbc:mysql://mysql:3306/w1_project
+    username: root
+    password: my-secret-pw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+#    show-sql: true
+  main:
+    allow-bean-definition-overriding: true
+logging:
+  level:
+    root: info
+  config: classpath:log4j2-local.xml

@@ -52,14 +52,14 @@ public class FirebaseAdapter implements ProviderAdapter {
                 String response = myFirebaseMessaging.send(message); // send to Firebase
 
                 if (response != null && response.startsWith("projects/")) { // check success
-                    log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Success", device.getId());
+                    log.info("Sent notification by FirebaseMessaging to device_id: {} - status: Success", device.getId());
                     isSuccess = true;
                 } else {
-                    log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Fail", device.getId());
+                    log.info("Sent notification by FirebaseMessaging to device_id: {} - status: Fail", device.getId());
                 }
                 responseJson.addProperty(device.getId(), response);
             } catch (FirebaseMessagingException e) {
-                log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Fail - error: {}", device.getId(), e.getMessage());
+                log.info("Sent notification by FirebaseMessaging to device_id: {} - status: Fail - error: {}", device.getId(), e.getMessage());
                 responseJson.addProperty(device.getId(), e.getMessage());
                 throw new RuntimeException(e);
             }

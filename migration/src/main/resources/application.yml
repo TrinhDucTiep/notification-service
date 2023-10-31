@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/w1_project
+#    url: jdbc:mysql://localhost:3306/w1_project
+    url: jdbc:mysql://mysql:3306/w1_project
     username: root
-    password:
+    password: my-secret-pw
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect

@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_DATABASE: w1_project
+    networks:
+      - mynetwork
+
+  notification-service-migrate:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    restart: always
+    image: notification-service:latest
+    ports:
+      - "8080:8080"
+    command:
+      - "java"
+      - "-jar"
+      - "/app/migration.jar"
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/w1_project
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: my-secret-pw
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+
+  notification-service-api:
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
+    restart: always
+    image: notification-service:latest
+    ports:
+      - "8082:8082"
+    command:
+      - "java"
+      - "-jar"
+      - "/app/app.jar"
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/w1_project
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: my-secret-pw
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+
+#    volumes:
+#      - ./api/src/main/resources/application.yml:/config/application.yml
+#      - ./migration/src/main/resources/application.yml:/config/migration/application.yml
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql-data:

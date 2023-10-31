@@ -11,6 +11,11 @@
         <sql>
             ALTER TABLE template ADD COLUMN `title` JSON not null;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE template DROP COLUMN `title`;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_02" author="tieptd">
@@ -18,6 +23,11 @@
             ALTER TABLE history
                 MODIFY response JSON NULL;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE history MODIFY response JSON NOT NULL;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_03" author="tieptd">
@@ -25,13 +35,23 @@
             ALTER TABLE history
                 MODIFY update_at JSON NULL;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE history MODIFY update_at DATETIME NOT NULL;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_04" author="tieptd">
         <sql>
             ALTER TABLE history
-                MODIFY COLUMN response JSON NULL COLLATE utf8mb4_general_ci;
+                MODIFY COLUMN response JSON NULL;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE history MODIFY COLUMN response JSON NOT NULL;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_05" author="tieptd">
@@ -39,13 +59,23 @@
             ALTER TABLE history
                 MODIFY COLUMN update_at DATETIME NULL;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE history MODIFY COLUMN update_at JSON NOT NULL;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_06" author="tieptd">
         <sql>
             ALTER TABLE notification
-                MODIFY COLUMN data JSON COLLATE utf8mb4_general_ci not NULL;
+                MODIFY COLUMN data JSON not NULL;
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE notification MODIFY COLUMN data JSON NOT NULL;
+            </sql>
+        </rollback>
     </changeSet>
 
     <changeSet id="1698045328177_07" author="tieptd">
@@ -55,7 +85,7 @@
                 DROP column template_id;
 
             ALTER TABLE template
-                MODIFY COLUMN id Varchar(255) COLLATE utf8mb4_general_ci not null;
+                MODIFY COLUMN id Varchar(255) not null;
 
             ALTER TABLE notification
                 add column rendered_title TEXT,
@@ -63,6 +93,22 @@
                 add column template_id varchar(255),
                 ADD CONSTRAINT `notification_template_fk` FOREIGN KEY (`template_id`) REFERENCES `template` (`id`);
         </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE notification
+                DROP FOREIGN KEY `notification_template_fk`,
+                DROP column rendered_title,
+                DROP column rendered_content,
+                DROP column template_id;
+
+                ALTER TABLE template
+                MODIFY COLUMN id Varchar(255) NOT NULL;
+
+                ALTER TABLE notification
+                ADD column template_id varchar(255),
+                ADD CONSTRAINT `notification_template_fk` FOREIGN KEY (`template_id`) REFERENCES `template` (`id`);
+            </sql>
+        </rollback>
     </changeSet>
 
 </databaseChangeLog>
