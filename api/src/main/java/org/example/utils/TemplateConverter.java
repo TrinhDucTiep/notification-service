@@ -45,12 +45,9 @@ public class TemplateConverter {
 
     public static Set<String> extractVariables(String titleTemplate, String contentTemplate) {
         Set<String> variables = new HashSet<>();
-        // Sử dụng một Set để theo dõi các biến đã xuất hiện
         Set<String> addedVariables = new HashSet<>();
 
-        // Tách và trích xuất biến từ titleTemplate
         extractVariablesFromTemplate(titleTemplate, variables, addedVariables);
-        // Tách và trích xuất biến từ contentTemplate
         extractVariablesFromTemplate(contentTemplate, variables, addedVariables);
 
         return variables;
@@ -62,7 +59,6 @@ public class TemplateConverter {
 
         while (matcher.find()) {
             String variable = matcher.group(1);
-            // Thêm biến vào variables chỉ nếu chưa được thêm trước đó
             if (!addedVariables.contains(variable)) {
                 variables.add(variable);
                 addedVariables.add(variable);

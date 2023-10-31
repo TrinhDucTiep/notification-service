@@ -48,13 +48,18 @@ public class FirebaseAdapter implements ProviderAdapter {
                     .setToken(device.getId())
                     .build();
             try {
+                log.info("Start sending notification by FirebaseMessaging to device with id: {}", device.getId());
                 String response = myFirebaseMessaging.send(message); // send to Firebase
-                log.info("111111111111111111111111: " + response);
+
                 if (response != null && response.startsWith("projects/")) { // check success
+                    log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Success", device.getId());
                     isSuccess = true;
+                } else {
+                    log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Fail", device.getId());
                 }
                 responseJson.addProperty(device.getId(), response);
             } catch (FirebaseMessagingException e) {
+                log.info("Sent notification by FirebaseMessaging to device with id: {} - status: Fail - error: {}", device.getId(), e.getMessage());
                 responseJson.addProperty(device.getId(), e.getMessage());
                 throw new RuntimeException(e);
             }

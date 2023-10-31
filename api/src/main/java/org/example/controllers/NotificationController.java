@@ -35,7 +35,6 @@ public class NotificationController {
 
     @GetMapping("/admin/notification")
     public ResponseEntity<CommonResponse<Object>> getNotificationAdmin(@Valid GetNotificationAdminRequest request) {
-//        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by("create_at").descending());
         Pageable pageable = PageableUtil.generate(request.getPage(), request.getSize(), "create_at");
         return ResponseEntity.ok(
                 new CommonResponse<>(
@@ -46,7 +45,6 @@ public class NotificationController {
 
     @GetMapping("/client/notification")
     public ResponseEntity<CommonResponse<Object>> getNotificationClient(@Valid GetNotificationClientRequest request) {
-//        Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), Sort.by("end_at").descending());
         Pageable pageable = PageableUtil.generate(request.getPage(), request.getSize(), "end_at");
         return ResponseEntity.ok(
                 new CommonResponse<>(

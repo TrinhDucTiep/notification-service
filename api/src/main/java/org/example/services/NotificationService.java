@@ -61,6 +61,9 @@ public class NotificationService {
 
         // get adapter
         ProviderAdapter adapter = (ProviderAdapter) applicationContext.getBean(template.getSender().getProvider().toString());
+        log.info("Choosing to send by channel [{}] & provider [{}]",
+                template.getChannel().toString(),
+                template.getSender().getProvider().toString());
 
         // extract arguments from thymeleaf
         Set<String> templateVariables = TemplateConverter.extractVariables(template.getTitle(), template.getForm());
