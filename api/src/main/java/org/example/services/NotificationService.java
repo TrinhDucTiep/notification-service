@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -61,8 +62,18 @@ public class NotificationService {
         // get adapter
         ProviderAdapter adapter = (ProviderAdapter) applicationContext.getBean(template.getSender().getProvider().toString());
 
+        // extract arguments from thymeleaf
+        Set<String> templateVariables = TemplateConverter.extractVariables(template.getTitle(), template.getForm());
+
         for (ToItem toItem : request.getTo()) {
             // render template
+            if (!TemplateConverter.isDataValid(toItem.getData(), templateVariables))
+                throw new MyException(
+                        null,
+                        "TEMPLATE_002",
+                        "Template arguments wrong",
+                        HttpStatus.BAD_REQUEST
+                );
             String renderedTitle = templateConverter.convertTemplate(template.getTitle(), toItem.getData());
             String renderedContent = templateConverter.convertTemplate(template.getForm(), toItem.getData());
 
